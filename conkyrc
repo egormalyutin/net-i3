@@ -1,0 +1,25 @@
+conky.config = {
+	own_window = true,
+	own_window_class = "conky",
+	own_window_type = "override",
+	own_window_transparent = true,
+	own_window_argb_visual = true,
+	own_window_colour = "000000",
+	own_window_argb_value = 0,
+	update_interval = 1,
+	own_window_hints = "undecorated,sticky,skip_taskbar,skip_pager,below",
+	double_buffer = true,
+
+	alignment = "top_left",
+
+	gap_x = 0,
+	gap_y = 0,
+
+	minimum_width = 1024,
+	minimum_height = 600,
+
+	lua_load = "/home/space/.config/i3/conky.lua",
+	lua_draw_hook_pre = "main",
+};
+
+conky.text = "";
