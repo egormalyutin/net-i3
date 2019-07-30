@@ -199,6 +199,8 @@ function conky_main()
 
 		max_value = 100,
 
+		change_color_on_critical = false,
+
 		start_angle = -240,
 		end_angle = 60,
 	})
@@ -239,12 +241,10 @@ function conky_main()
 		critical_threshold = 60,
 
 		change_color_on_critical = true,
-		change_thickness_on_critical = true,
 
-		background_color_critical = 0xFFA0A0,
-		background_thickness_critical = 10,
+		background_color_critical = 0xFF2828,
 
-		bar_color_critical = 0xFFAAAA,
+		bar_color_critical = 0xFF2828,
 	})
 
 
@@ -308,10 +308,13 @@ function conky_main()
 	xoff2 = xoff + GX + 10 - 5
 	yoff2 = yoff + GY + 10 + 60
 
+	dtx = 16
+	dty = 0
+
 	draw_static_text(cr, prep{
 		kind = "static_text",
 
-		from = {x = 702 + xoff2, y = yoff2 + 18},
+		from = {x = 702 + xoff2 + dtx, y = yoff2 + 18 + dty},
 
 		text = os.date"%H:%M",
 
@@ -326,7 +329,7 @@ function conky_main()
 	draw_static_text(cr, prep{
 		kind = "static_text",
 
-		from = {x = 702 + xoff2 + 120, y = yoff2 + 2},
+		from = {x = 702 + xoff2 + 120 + dtx, y = yoff2 + 2 + dty},
 
 		text = os.date"%A",
 
@@ -339,9 +342,9 @@ function conky_main()
 	draw_static_text(cr, prep{
 		kind = "static_text",
 
-		from = {x = 702 + xoff2 + 120, y = yoff2 + 18},
+		from = {x = 702 + xoff2 + 120 + dtx, y = yoff2 + 18 + dty},
 
-		text = os.date"%x",
+		text = os.date"%d.%m.%y",
 
 		font = "Hack",
 		font_size = 15,
@@ -357,7 +360,7 @@ function conky_main()
 		
 		from = {x = 702 + xoff2 + lx - 20 + 11, y = yoff2 + 18 + ly + 5},
 
-		text = "DF",
+		text = "DU",
 
 		font = "Hack",
 		font_size = 15,
@@ -424,25 +427,24 @@ function conky_main()
 	})
 
 	net = conky_parse("${wireless_essid wlp2s0}")
-	nettext = ""
-	if net == "off/any" then
-		nettext = "Not found any station"
-	end
-
 	nettext = "Nearest station: " .. net
 	if #net > 12 then
 		nettext = "Nearest station: " .. net:sub(0, 11) .. "…"
 	end
 
+	if net == "off/any" then
+		nettext = "Not found any station"
+	end
+
 	draw_static_text(cr, prep{
 		kind = "static_text",
 		
-		from = {x = 702 + xoff2 - 75, y = yoff2 + 18 + ly + 5 + 60},
+		from = {x = 702 + xoff2 - 50, y = yoff2 + 18 + ly + 5 + 60},
 
 		text = nettext,
 
 		font = "Hack",
-		font_size = 15,
+		font_size = 12,
 		bold = true,
 		color = 0xffffff
 	})
