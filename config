@@ -144,16 +144,16 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 30 px or 30 ppt
-        bindsym k resize grow height 30 px or 30 ppt
-        bindsym l resize shrink height 30 px or 30 ppt
-        bindsym semicolon resize grow width 30 px or 30 ppt
+        bindsym j resize shrink width 5 px
+        bindsym k resize grow height 5 px
+        bindsym l resize shrink height 5 px
+        bindsym semicolon resize grow width 5 px
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 30 px or 30 ppt
-        bindsym Down resize grow height 30 px or 30 ppt
-        bindsym Up resize shrink height 30 px or 30 ppt
-        bindsym Right resize grow width 30 px or 30 ppt
+        bindsym Left resize shrink width 5 px
+        bindsym Down resize grow height 5 px
+        bindsym Up resize shrink height 5 px
+        bindsym Right resize grow width 5 px
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -164,12 +164,15 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 default_border none
+for_window [class="^.*"] border pixel 0
+
 gaps inner 5
 smart_gaps on
 exec --no-startup-id dunst &
 exec --no-startup-id feh --bg-scale ~/.config/i3/bg.png &
-exec --no-startup-id compton --config ~/.config/i3/compton.conf &
+# exec --no-startup-id compton --config ~/.config/i3/compton.conf &
 exec --no-startup-id cd ~/.config/i3 && conky -c conkyrc &
+exec --no-startup-id zsh -c "while true; do; if (($(acpi | sed 's/Char/100%/' | grep -Eo '[0-9]+%' | head -n1 | grep -Eo '[0-9]+') < 20)); then; zenity --warning --text='Battery low'; fi; sleep 20; done" &
 
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
 bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute

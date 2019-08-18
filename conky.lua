@@ -7,17 +7,6 @@ function prep(elem)
 	return elem
 end
 
--- TODO: cache imgs
-
-function draw_image(cr, path, x, y, width, height)
-	img = cairo_image_create_surface_from_png(path)
-	cairo_translate(cr, x, y)
-	cairo_scale(cr, width / cairo_image_surface_get_width(img), height / cairo_image_surface_get_height(img))
-	cairo_set_source_surface(cr, img, 0, 0)
-	cairo_paint(cr)
-	cairo_surface_destroy(image)
-end
-
 function conky_main()
 	if conky_window == nil then
 		return
@@ -31,6 +20,15 @@ function conky_main()
 		conky_window.height
 	)
 	local cr = cairo_create(cs)
+
+	local image = cairo_image_surface_create_from_png("/home/space/.config/i3/bg.png")
+	cairo_save(cr)
+	cairo_translate (cr, 0, 5);
+	cairo_set_source_surface (cr, image, 0, 0);
+	cairo_paint (cr);
+	cairo_surface_destroy (image);
+	cairo_restore(cr)
+
 
 	colors = {}
 	colors.bg = {1,1,1,1}
